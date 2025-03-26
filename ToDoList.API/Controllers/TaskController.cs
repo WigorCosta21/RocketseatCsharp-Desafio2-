@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList.Application.UseCases.Task.GetAll;
 using ToDoList.Application.UseCases.Task.Register;
 using ToDoList.Communication.Request;
 using ToDoList.Communication.Response;
@@ -19,5 +20,22 @@ public class TaskController : ControllerBase
         var response = useCase.Execute(request);
 
         return Created(string.Empty, response);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ResponseAllTaskJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public IActionResult GetAll()
+    {
+        var useCase = new GetAllTaskUseCase();
+
+        var response = useCase.Execute();
+
+        if(response.Any())
+        {
+            return Ok(response);
+        }
+
+        return NoContent();
     }
 }
