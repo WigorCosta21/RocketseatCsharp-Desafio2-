@@ -1,7 +1,7 @@
 ﻿using ToDoList.Communication.Enuns;
 
-namespace ToDoList.Communication.Response;
-public class ResponseRegisterJson
+namespace ToDoList.Communication.Request;
+public class RequestUpdateTaskJson
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

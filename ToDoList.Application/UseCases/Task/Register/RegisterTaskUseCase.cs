@@ -6,7 +6,7 @@ using ToDoList.Communication.Response;
 namespace ToDoList.Application.UseCases.Task.Register;
 public class RegisterTaskUseCase
 {
-    public ResponseRegisterJson Execute(RequestTaskJson request)
+    public ResponseTaskJson Execute(RequestTaskJson request)
     {
         var task = new TaskItem
         {
@@ -20,7 +20,7 @@ public class RegisterTaskUseCase
 
         TaskRepository.Tasks.Add(task);
 
-        return new ResponseRegisterJson
+        return new ResponseTaskJson
         {
             Id = request.Id,
             Name = request.Name,

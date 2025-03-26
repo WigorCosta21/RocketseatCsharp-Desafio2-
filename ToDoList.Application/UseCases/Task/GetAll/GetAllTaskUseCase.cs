@@ -4,9 +4,9 @@ using ToDoList.Communication.Response;
 namespace ToDoList.Application.UseCases.Task.GetAll;
 public class GetAllTaskUseCase
 {
-    public List<ResponseAllTaskJson> Execute()
+    public List<ResponseTaskJson> Execute()
     {
-        return TaskRepository.Tasks.Select(task => new ResponseAllTaskJson
+        return TaskRepository.Tasks.Select(task => new ResponseTaskJson
         {
             Id = task.Id,
             Name = task.Name,
