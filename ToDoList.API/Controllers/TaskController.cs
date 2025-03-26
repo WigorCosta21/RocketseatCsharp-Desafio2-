@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToDoList.Application.UseCases.Task.Delete;
 using ToDoList.Application.UseCases.Task.GetAll;
 using ToDoList.Application.UseCases.Task.GetById;
 using ToDoList.Application.UseCases.Task.Register;
@@ -32,7 +33,7 @@ public class TaskController : ControllerBase
 
         var response = useCase.Execute();
 
-        if(response.Any())
+        if (response.Any())
         {
             return Ok(response);
         }
@@ -44,17 +45,35 @@ public class TaskController : ControllerBase
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseTaskJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
-    public IActionResult GetById(int id)
+    public IActionResult GetById([FromRoute] int id)
     {
         var useCase = new GetByIdTaskUseCase();
 
         var response = useCase.Execute(id);
 
-        if(response  == null)
+        if (response == null)
         {
             return NotFound();
         }
 
         return Ok(response);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+    public IActionResult Delete([FromRoute] int id)
+    {
+        var useCase = new DeleteTaskByIdUseCase(); 
+        
+        var response = useCase.Execute(id);
+
+        if(response == null)
+        {
+            return NotFound();
+        }
+
+        return Ok();
     }
 }
