@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoList.Application.UseCases.Task.GetAll;
+using ToDoList.Application.UseCases.Task.GetById;
 using ToDoList.Application.UseCases.Task.Register;
 using ToDoList.Communication.Request;
 using ToDoList.Communication.Response;
@@ -37,5 +38,23 @@ public class TaskController : ControllerBase
         }
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseTaskJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+    public IActionResult GetById(int id)
+    {
+        var useCase = new GetByIdTaskUseCase();
+
+        var response = useCase.Execute(id);
+
+        if(response  == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(response);
     }
 }
